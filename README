@@ -10,7 +10,7 @@ TODO:
   add to pypi
   tests (especially for EOF and the like)
   support for other languages
-  faster throughput
+  more throughput
   tighter code
 
 
