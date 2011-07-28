@@ -8,6 +8,6 @@ setup(name='Plainsight',
       author='Robert Winslow',
       author_email='robert.winslow@gmail.com',
       url='http://github.com/rw/plainsight',
-      packages=['bitstring', 'progressbar'],
+      packages=['argparse', 'bitstring', 'progressbar'],
      )
 
