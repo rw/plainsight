@@ -1,5 +1,17 @@
 Plainsight, a textual steganography tool.
 
+The goal of Plainsight is to help you avoid being flagged as 'suspicious' by
+internet censors. For example, by encoding files with Plainsight, one could
+potentially evade the Chinese Great Firewall, by making your data look like
+harmless English prose... instead of the encrypted archive that it really is.
+
+
+TODO:
+  faster throughput
+  support for other languages
+  tighter code
+
+
 Author: Robert Winslow
 Source: http://github.com/rw/plainsight
 Email: robert.winslow@gmail.com
