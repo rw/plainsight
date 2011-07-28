@@ -7,7 +7,6 @@ harmless English prose... instead of the encrypted archive that it really is.
 
 
 TODO:
-  compatibility with python 2.5 (currently only 2.7 is supported)
   add to pypi
   tests (especially for EOF and the like)
   support for other languages
@@ -30,7 +29,7 @@ $ git clone git://github.com/rw/plainsight.git
 $ cd plainsight
 
 # install the required plugins (or use virtualenv):
-$ sudo pip install bitstring progressbar
+$ sudo pip install argparse bitstring progressbar
 
 # download a copy of 'The Adventures of Sherlock Holmes'
 $ curl -O http://www.gutenberg.org/cache/epub/1661/pg1661.txt
