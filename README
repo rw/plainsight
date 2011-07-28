@@ -55,4 +55,4 @@ twisted
 
 # now, decipher that ciphertext:
 $ cat ciphertext | ./plainsight.py -m decipher -f pg1661.txt > deciphered
-$ diff cleartest deciphered
+$ diff cleartext deciphered
