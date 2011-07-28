@@ -7,8 +7,10 @@ harmless English prose... instead of the encrypted archive that it really is.
 
 
 TODO:
-  faster throughput
+  compatibility with python 2.5 (currently only 2.7 is supported)
+  add to pypi
   support for other languages
+  faster throughput
   tighter code
 
 
