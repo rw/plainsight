@@ -9,6 +9,7 @@ harmless English prose... instead of the encrypted archive that it really is.
 TODO:
   compatibility with python 2.5 (currently only 2.7 is supported)
   add to pypi
+  tests (especially for EOF and the like)
   support for other languages
   faster throughput
   tighter code
@@ -57,4 +58,3 @@ twisted
 
 # now, decipher that ciphertext:
 $ cat ciphertext | ./plainsight.py -m decipher -f pg1661.txt > deciphered
-$ diff cleartext deciphered
