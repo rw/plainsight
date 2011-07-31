@@ -9,12 +9,15 @@ from model import *
 # Argument parser
 
 parser = argparse.ArgumentParser(description='Plainsight: a textual steganography tool to make your data look like prose.' + \
-                                             '\nHomepage: http://github.com/rw/plainsight' + \
+                                             '\nHomepage and examples: http://github.com/rw/plainsight' + \
                                              '\nAuthor: Robert Winslow (@robert_winslow)',
                                  formatter_class=argparse.RawDescriptionHelpFormatter,
                                  epilog=textwrap.dedent('''\
                                          Example invocations:
-                                         echo "the meeting place is Union Square at 5pm" | ./plainsight.py --mode=encipher -f a-book.txt
+                                         Encipher:
+                                            echo "the meeting place is Union Square at 5pm" | plainsight --mode=encipher -f a-book.txt > ciphertext
+                                         Decipher:
+                                            cat ciphertext | plainsight --mode=decipher -f a-book.txt
                                          '''))
 parser.add_argument('-m', '--mode', metavar='MODE', type=str, nargs=1, required=True,
                     choices=['encipher', 'decipher'],
