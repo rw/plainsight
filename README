@@ -10,7 +10,7 @@ like harmless English prose. When you transmit it to someone else, eaves-
 droppers will only see the written word, and not your data payload.
 
 This is an improvement over just sending an encrypted file, because no
-suspicious random-looking bitstreams are generated.
+suspicious random-looking bitstreams are seen by others.
 
 
 TODO:
