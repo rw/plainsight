@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+python -um plainsight.plainsight $@
