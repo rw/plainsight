@@ -5,9 +5,12 @@ Source: http://github.com/rw/plainsight
 Email: robert.winslow@gmail.com
 
 The goal of Plainsight is to help you avoid being flagged as 'suspicious' by
-internet censors. For example, by encoding files with Plainsight, one could
-potentially evade the Great Firewall of China, by making your data look like
-harmless English prose... instead of the encrypted archive that it really is.
+internet censors. By using Plainsight, your data will be enciphered to look
+like harmless English prose. When you transmit it to someone else, eaves-
+droppers will only see the written word, and not your data payload.
+
+This is an improvement over just sending an encrypted file, because no
+suspicious random-looking bitstreams are generated.
 
 
 TODO:
