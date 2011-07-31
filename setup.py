@@ -3,7 +3,7 @@
 from setuptools import setup
 
 setup(name='Plainsight',
-      version='1.0a',
+      version='1.0b',
       description='A textual steganography tool to defeat censorship.',
       author='Robert Winslow',
       author_email='robert.winslow@gmail.com',
