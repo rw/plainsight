@@ -13,7 +13,7 @@ setup(name='Plainsight',
                    'Intended Audience :: End Users/Desktop',
                    'Natural Language :: English',
                    'Programming Language :: Python',
-                   'Topic :: Security :: Cryptography'
+                   'Topic :: Security :: Cryptography',
                    'Topic :: Text Processing :: Filters',
                    'Topic :: Text Processing :: Linguistic',
                   ],
