@@ -8,7 +8,9 @@ from model import *
 ###############################################################################
 # Argument parser
 
-parser = argparse.ArgumentParser(description='Plainsight: a textual steganography to make your data look like prose.',
+parser = argparse.ArgumentParser(description='Plainsight: a textual steganography tool to make your data look like prose.' + \
+                                             '\nHomepage: http://github.com/rw/plainsight' + \
+                                             '\nAuthor: Robert Winslow (@robert_winslow)',
                                  formatter_class=argparse.RawDescriptionHelpFormatter,
                                  epilog=textwrap.dedent('''\
                                          Example invocations:
@@ -21,7 +23,8 @@ parser.add_argument('-c', '--context', metavar='N', type=int, nargs='?', default
                    help='The number of tokens to use as context. ' + \
                         'Choose a number from 0 through 10. Default is 3. ' + \
                         'The time to build a model increases [superlinearly] with this, but so does similarity to the source texts.')
-parser.add_argument('-f', '--model-file', metavar='FILE', type=argparse.FileType('rb'), nargs='*',
+parser.add_argument('-f', '--model-file', metavar='FILE', type=argparse.FileType('rb'), nargs='+',
+                    required=True,
                    help='One or more files to use when creating the lingustic model. ' + \
                         'The data from the file will be used verbatim. ' + \
                         'Example input: a downloaded a Project Guttenberg book.')
@@ -33,11 +36,9 @@ parser.add_argument('-u', '--model-url', metavar='URL', type=str, nargs='*',
 #                   help='Input file. Defaults to stdin.')
 #parser.add_argument('-o', '--output', metavar='FILE', type=argparse.FileType('wb'), default=sys.stdout,
 #                   help='Output file. Defaults to stdout.')
-parser.add_argument('-l', '--log', metavar='FILE', type=file, default=sys.stderr,
-                   help='Logging file. Defaults to stderr (shows diagnostic data).')
 
 args = parser.parse_args()
-MODEL_FILES, MODEL_URLS = args.model_file, args.model_url
+MODEL_FILES = args.model_file
 MODE = args.mode[0]
 CONTEXT = args.context
 INPUT, OUTPUT, LOGGING = sys.stdin, sys.stdout, sys.stderr
@@ -46,14 +47,11 @@ INPUT, OUTPUT, LOGGING = sys.stdin, sys.stdout, sys.stderr
 # main sequence go
 
 if __name__ == '__main__':
-    global_start = time()
-    if MODEL_FILES is None and MODEL_URLS is None:
-        raise RuntimeError('Provide at least URL or file to build the language model.')
-
     model = Model(CONTEXT)
 
     # load files for language model:
     if MODEL_FILES is not None:
+        sys.stderr.write('Adding models:\n')
         for f in MODEL_FILES:
             start = time()
             model_text = data.take_char_input(f)
@@ -63,12 +61,16 @@ if __name__ == '__main__':
 
     sys.stderr.write('input is "%s", ' % INPUT.name)
     sys.stderr.write('output is "%s"\n' % OUTPUT.name)
+    sys.stderr.write('\n')
+
 
     if MODE == 'encipher':
         cleartext = data.take_binary_input(INPUT)
         ciphertext = encipher(model, CONTEXT, cleartext)
+        sys.stderr.write('\n')
         sys.stdout.write(ciphertext)
     elif MODE == 'decipher':
         ciphertext = data.to_words(data.take_char_input(INPUT))
         cleartext = decipher(model, CONTEXT, ciphertext)
+        sys.stderr.write('\n')
         sys.stdout.write(cleartext.tobytes())

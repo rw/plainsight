@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
-from distutils.core import setup
+from setuptools import setup
+from sys import version
+
 
 setup(name='Plainsight',
       version='1.0',
@@ -8,6 +10,6 @@ setup(name='Plainsight',
       author='Robert Winslow',
       author_email='robert.winslow@gmail.com',
       url='http://github.com/rw/plainsight',
-      packages=['argparse', 'bitstring', 'progressbar'],
+      requires=['argparse', 'bitstring', 'progressbar'],
      )
 
