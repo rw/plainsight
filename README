@@ -1,4 +1,8 @@
-Plainsight, a textual steganography tool.
+Plainsight, a textual steganography tool to defeat censorship.
+
+Author: Robert Winslow
+Source: http://github.com/rw/plainsight
+Email: robert.winslow@gmail.com
 
 The goal of Plainsight is to help you avoid being flagged as 'suspicious' by
 internet censors. For example, by encoding files with Plainsight, one could
@@ -7,37 +11,30 @@ harmless English prose... instead of the encrypted archive that it really is.
 
 
 TODO:
-  add to pypi
-  tests (especially for EOF and the like)
-  support for other languages
+  fuzz testing
+  regression tests (especially for EOF and the like)
+  robust adding of files to language model (e.g. independent of args order)
+  model serialization
   more throughput
   tighter code
+  support for other languages (e.g. Chinese)
+  port to other languages (e.g. Ruby)
 
 
-Author: Robert Winslow
-Source: http://github.com/rw/plainsight
-Email: robert.winslow@gmail.com
 
+How to use:
 
-How to use (from a bash-like shell):
-
-# clone the repository:
-$ git clone git://github.com/rw/plainsight.git
-
-# enter it:
-$ cd plainsight
-
-# install the required plugins (or use virtualenv):
-$ sudo pip install argparse bitstring progressbar
+# Install it:
+$ sudo pip install plainsight
 
 # download a copy of 'The Adventures of Sherlock Holmes'
-$ curl -O http://www.gutenberg.org/cache/epub/1661/pg1661.txt
+$ curl -o sherlock.txt http://www.gutenberg.org/cache/epub/1661/pg1661.txt
 
 # type your message to encode:
 $ echo 'Meet at Union Square at noon. The password is FuriousGreen.' > cleartext
 
 # then, pipe it through Plainsight:
-$ cat cleartext | ./plainsight.py -m encipher -f pg1661.txt > ciphertext
+$ cat cleartext | plainsight -m encipher -f sherlock.txt > ciphertext
 
 # the output will be gibberish that Doyle could've written:
 $ cat ciphertext |fold -s
@@ -55,4 +52,6 @@ note-book has come away and in my old Sherlock was already down to do with the
 twisted
 
 # now, decipher that ciphertext:
-$ cat ciphertext | ./plainsight.py -m decipher -f pg1661.txt > deciphered
+$ cat ciphertext | plainsight -m decipher -f sherlock.txt > deciphered
+$ cat deciphered
+Meet at Union Square at noon. The password is FuriousGreen.
