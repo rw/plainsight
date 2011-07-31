@@ -12,7 +12,9 @@ harmless English prose... instead of the encrypted archive that it really is.
 
 TODO:
   fuzz testing
-  regression tests (especially for EOF and the like)
+  more entropic ciphertexts
+    (e.g. play with changing the probability mass as tree depth increases)
+  regression tests (e.g. for EOF)
   robust adding of files to language model (e.g. independent of args order)
   model serialization
   more throughput
@@ -20,6 +22,9 @@ TODO:
   support for other languages (e.g. Chinese)
   port to other languages (e.g. Ruby)
 
+BUGS:
+  the last few bits of a file can be garbled when deciphered
+    workaround: check that the deciphered output matches the original cleartext
 
 
 How to use:
