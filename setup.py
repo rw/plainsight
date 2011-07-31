@@ -18,5 +18,6 @@ setup(name='Plainsight',
                    'Topic :: Text Processing :: Linguistic',
                   ],
       requires=['argparse', 'bitstring', 'progressbar'],
+      scripts=['bin/plainsight'],
+      packages=['plainsight']
      )
-
