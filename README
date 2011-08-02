@@ -1,9 +1,15 @@
 Plainsight, a textual steganography tool to defeat censorship.
+==============================================================
 
+Contact
+-------
 Author: Robert Winslow
 Source: http://github.com/rw/plainsight
 Email: robert.winslow@gmail.com
 
+
+Description
+-----------
 The goal of Plainsight is to help you avoid being flagged as 'suspicious' by
 internet censors. By using Plainsight, your data will be enciphered to look
 like harmless English prose. When you transmit it to someone else, eaves-
@@ -13,24 +19,8 @@ This is an improvement over just sending an encrypted file, because no
 suspicious random-looking bitstreams are seen by others.
 
 
-TODO:
-  fuzz testing
-  more entropic ciphertexts
-    (e.g. play with changing the probability mass as tree depth increases)
-  regression tests (e.g. for EOF)
-  robust adding of files to language model (e.g. independent of args order)
-  model serialization
-  more throughput
-  tighter code
-  support for other languages (e.g. Chinese)
-  port to other languages (e.g. Ruby)
-
-BUGS:
-  the last few bits of a file can be garbled when deciphered
-    workaround: check that the deciphered output matches the original cleartext
-
-
-How to use:
+How to use
+----------
 
 # Install it:
 $ sudo pip install plainsight
@@ -65,7 +55,28 @@ $ cat deciphered
 Meet at Union Square at noon. The password is FuriousGreen.
 
 
-LICENSE
+TODO
+----
+* fuzz testing
+* more entropic ciphertexts
+*   (e.g. play with changing the probability mass as tree depth increases)
+* regression tests (e.g. for EOF)
+* robust adding of files to language model (e.g. independent of args order)
+* model serialization
+* more throughput
+* tighter code
+* support for other languages (e.g. Chinese)
+* port to other languages (e.g. Ruby)
+
+
+Bugs
+----
+the last few bits of a file can be garbled when deciphered
+  workaround: check that the deciphered output matches the original cleartext
+
+
+License
+-------
 
 Copyright (c) 2011, Robert Winslow
 All rights reserved.
@@ -80,9 +91,8 @@ Redistributions in binary form must reproduce the above copyright notice, this
 list of conditions and the following disclaimer in the documentation and/or
 other materials provided with the distribution.
 
-Neither the name of the organization nor the names of its contributors may be
-used to endorse or promote products derived from this software without specific
-prior written permission.
+The names of the contributors may not be used to endorse or promote products
+derived from this software without specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
