@@ -3,9 +3,9 @@ Plainsight, a textual steganography tool to defeat censorship.
 
 Contact
 -------
-Author: Robert Winslow
-Source: http://github.com/rw/plainsight
-Email: robert.winslow@gmail.com
+* Author: Robert Winslow
+* Source: http://github.com/rw/plainsight
+* Email: robert.winslow@gmail.com
 
 
 Description
@@ -22,57 +22,63 @@ suspicious random-looking bitstreams are seen by others.
 How to use
 ----------
 
-# Install it:
-$ sudo pip install plainsight
+1. Install it:
 
-# download a copy of 'The Adventures of Sherlock Holmes'
-$ curl -o sherlock.txt http://www.gutenberg.org/cache/epub/1661/pg1661.txt
+    sudo pip install plainsight
 
-# type your message to encode:
-$ echo 'Meet at Union Square at noon. The password is FuriousGreen.' > cleartext
+2. Download a copy of 'The Adventures of Sherlock Holmes'
 
-# then, pipe it through Plainsight:
-$ cat cleartext | plainsight -m encipher -f sherlock.txt > ciphertext
+    curl -o sherlock.txt http://www.gutenberg.org/cache/epub/1661/pg1661.txt
 
-# the output will be gibberish that Doyle could've written:
-$ cat ciphertext |fold -s
-which was the case, of a light. And, his hand. "BALLARAT." only applicant?" 
-decline be walking we do, the point of the little man in a strange, her 
-husband's hand, going said road, path but you do know what I have heard of you, 
-I found myself to get away from home and for the ventilator little cold night, 
-and I he had left my friend Sherlock of our visitor and he had an idea was not 
-to abuse step I of you, I knew what I was then the first signs it is the 
-daughter, at least a fellow-countryman. had come. as I have already explained, 
-the garden. what you can see a of importance. your hair. a picture upon of the 
-money which had brought a you have a little good deal in way: out to my wife 
-and hurry." made your hair. a charge me a series events, and excuse no sign his 
-note-book has come away and in my old Sherlock was already down to do with the 
-twisted
+3. Type your message to encode:
 
-# now, decipher that ciphertext:
-$ cat ciphertext | plainsight -m decipher -f sherlock.txt > deciphered
-$ cat deciphered
-Meet at Union Square at noon. The password is FuriousGreen.
+    echo 'Meet at Union Square at noon. The password is FuriousGreen.' > cleartext
+
+4. Then, pipe it through Plainsight:
+
+    cat cleartext | plainsight -m encipher -f sherlock.txt > ciphertext
+
+5. The output will be gibberish that Doyle could've written:
+
+      cat ciphertext |fold -s
+      which was the case, of a light. And, his hand. "BALLARAT." only applicant?" 
+      decline be walking we do, the point of the little man in a strange, her 
+      husband's hand, going said road, path but you do know what I have heard of you, 
+      I found myself to get away from home and for the ventilator little cold night, 
+      and I he had left my friend Sherlock of our visitor and he had an idea was not 
+      to abuse step I of you, I knew what I was then the first signs it is the 
+      daughter, at least a fellow-countryman. had come. as I have already explained, 
+      the garden. what you can see a of importance. your hair. a picture upon of the 
+      money which had brought a you have a little good deal in way: out to my wife 
+      and hurry." made your hair. a charge me a series events, and excuse no sign his 
+      note-book has come away and in my old Sherlock was already down to do with the 
+      twisted
+
+6. Now, decipher that ciphertext:
+
+    cat ciphertext | plainsight -m decipher -f sherlock.txt > deciphered
+    cat deciphered
+    Meet at Union Square at noon. The password is FuriousGreen.
 
 
 TODO
 ----
-* fuzz testing
-* more entropic ciphertexts
-*   (e.g. play with changing the probability mass as tree depth increases)
-* regression tests (e.g. for EOF)
-* robust adding of files to language model (e.g. independent of args order)
-* model serialization
-* more throughput
-* tighter code
-* support for other languages (e.g. Chinese)
-* port to other languages (e.g. Ruby)
+* Fuzz testing.
+* More entropic ciphertexts.
+*   (e.g. play with changing the probability mass as tree depth increases).
+* Regression tests (e.g. for EOF).
+* Robust adding of files to language model (e.g. independent of args order).
+* Model serialization to pickled Python objects.
+* Higher throughput.
+* Tighter code.
+* Support for other languages (e.g. Chinese).
+* Port to other languages (e.g. Ruby).
 
 
 Bugs
 ----
-the last few bits of a file can be garbled when deciphered
-  workaround: check that the deciphered output matches the original cleartext
+The last few bits of a file can be garbled when deciphered.
+  Workaround: check that the deciphered output matches the original cleartext.
 
 
 License
