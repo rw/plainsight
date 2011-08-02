@@ -24,44 +24,44 @@ How to use
 
 1. Install it:
 
-    sudo pip install plainsight
+        sudo pip install plainsight
 
 2. Download a copy of 'The Adventures of Sherlock Holmes'
 
-    curl -o sherlock.txt http://www.gutenberg.org/cache/epub/1661/pg1661.txt
+        curl -o sherlock.txt http://www.gutenberg.org/cache/epub/1661/pg1661.txt
 
 3. Type your message to encode:
 
-    echo 'Meet at Union Square at noon. The password is FuriousGreen.' > cleartext
+        echo 'Meet at Union Square at noon. The password is FuriousGreen.' > cleartext
 
 4. Then, pipe it through Plainsight:
 
-    cat cleartext | plainsight -m encipher -f sherlock.txt > ciphertext
+        cat cleartext | plainsight -m encipher -f sherlock.txt > ciphertext
 
 5. The output will be gibberish that Doyle could've written:
 
-    cat ciphertext | fold -s
+        cat ciphertext | fold -s
 
-    which was the case, of a light. And, his hand. "BALLARAT." only applicant?" 
-    decline be walking we do, the point of the little man in a strange, her 
-    husband's hand, going said road, path but you do know what I have heard of you, 
-    I found myself to get away from home and for the ventilator little cold night, 
-    and I he had left my friend Sherlock of our visitor and he had an idea was not 
-    to abuse step I of you, I knew what I was then the first signs it is the 
-    daughter, at least a fellow-countryman. had come. as I have already explained, 
-    the garden. what you can see a of importance. your hair. a picture upon of the 
-    money which had brought a you have a little good deal in way: out to my wife 
-    and hurry." made your hair. a charge me a series events, and excuse no sign his 
-    note-book has come away and in my old Sherlock was already down to do with the 
-    twisted
+        which was the case, of a light. And, his hand. "BALLARAT." only applicant?" 
+        decline be walking we do, the point of the little man in a strange, her 
+        husband's hand, going said road, path but you do know what I have heard of you, 
+        I found myself to get away from home and for the ventilator little cold night, 
+        and I he had left my friend Sherlock of our visitor and he had an idea was not 
+        to abuse step I of you, I knew what I was then the first signs it is the 
+        daughter, at least a fellow-countryman. had come. as I have already explained, 
+        the garden. what you can see a of importance. your hair. a picture upon of the 
+        money which had brought a you have a little good deal in way: out to my wife 
+        and hurry." made your hair. a charge me a series events, and excuse no sign his 
+        note-book has come away and in my old Sherlock was already down to do with the 
+        twisted
 
 6. Now, decipher that ciphertext:
 
-    cat ciphertext | plainsight -m decipher -f sherlock.txt > deciphered
+        cat ciphertext | plainsight -m decipher -f sherlock.txt > deciphered
 
-    cat deciphered
+        cat deciphered
 
-    Meet at Union Square at noon. The password is FuriousGreen.
+        Meet at Union Square at noon. The password is FuriousGreen.
 
 
 TODO
