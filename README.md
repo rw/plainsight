@@ -40,24 +40,27 @@ How to use
 
 5. The output will be gibberish that Doyle could've written:
 
-      cat ciphertext |fold -s
-      which was the case, of a light. And, his hand. "BALLARAT." only applicant?" 
-      decline be walking we do, the point of the little man in a strange, her 
-      husband's hand, going said road, path but you do know what I have heard of you, 
-      I found myself to get away from home and for the ventilator little cold night, 
-      and I he had left my friend Sherlock of our visitor and he had an idea was not 
-      to abuse step I of you, I knew what I was then the first signs it is the 
-      daughter, at least a fellow-countryman. had come. as I have already explained, 
-      the garden. what you can see a of importance. your hair. a picture upon of the 
-      money which had brought a you have a little good deal in way: out to my wife 
-      and hurry." made your hair. a charge me a series events, and excuse no sign his 
-      note-book has come away and in my old Sherlock was already down to do with the 
-      twisted
+    cat ciphertext | fold -s
+
+    which was the case, of a light. And, his hand. "BALLARAT." only applicant?" 
+    decline be walking we do, the point of the little man in a strange, her 
+    husband's hand, going said road, path but you do know what I have heard of you, 
+    I found myself to get away from home and for the ventilator little cold night, 
+    and I he had left my friend Sherlock of our visitor and he had an idea was not 
+    to abuse step I of you, I knew what I was then the first signs it is the 
+    daughter, at least a fellow-countryman. had come. as I have already explained, 
+    the garden. what you can see a of importance. your hair. a picture upon of the 
+    money which had brought a you have a little good deal in way: out to my wife 
+    and hurry." made your hair. a charge me a series events, and excuse no sign his 
+    note-book has come away and in my old Sherlock was already down to do with the 
+    twisted
 
 6. Now, decipher that ciphertext:
 
     cat ciphertext | plainsight -m decipher -f sherlock.txt > deciphered
+
     cat deciphered
+
     Meet at Union Square at noon. The password is FuriousGreen.
 
 
