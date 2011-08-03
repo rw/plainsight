@@ -144,39 +144,35 @@ def next_token(in_ciphertext, enum):
         return None, 0
 
 def next_output(payload, enum, mode):
+    choices = len(enum)
+    if choices <= 1:
+        return None, 0
+    choice_bits = probability.len_log2_floor(choices)
+    # if there are no choices, return None:
+    if choice_bits == 0: return None, 0
+
     if mode == 'encipher':
-        # input is bitstring
+        bits_to_take = min(len(payload), choice_bits)
+    if mode == 'decipher':
+        token = payload[0]
 
-        choices = len(enum)
 
-        if choices <= 1:
-            return None, 0
-        choice_bits = probability.len_log2_floor(choices)
-        nBits = len(payload)
+    if mode == 'encipher':
 
-        # if there are no choices, return None:
-        if choice_bits == 0: return None, 0
 
-        bits_to_take = min(choice_bits, nBits)
+#       bits_to_take = min(choice_bits, nBits)
         bits = payload[:bits_to_take]
         return bits.uint, bits_to_take
     elif mode == 'decipher':
         # payload is token array
-        choices = len(enum)
 
-        if choices <= 1:
-            return None, 0
-        choice_bits = probability.len_log2_floor(choices)
-
-        # if there are no choices, return None:
-        if choice_bits == 0: return None, 0
         if len(payload) == 0: return None, 0
 
-        tok = payload[0]
-        if tok in enum:
-            ind = enum.index(tok)
+#       tok = payload[0]
+        if token in enum:
+            ind = enum.index(token)
             bits = ConstBitArray(uint=ind, length=choice_bits)
-            return tok, bits
+            return token, bits
         else:
             return None, 0
 
