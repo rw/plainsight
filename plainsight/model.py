@@ -143,6 +143,46 @@ def next_token(in_ciphertext, enum):
     else:
         return None, 0
 
+def next_output(payload, enum, mode):
+    if mode == 'encipher':
+        # input is bitstring
+
+        choices = len(enum)
+
+        if choices <= 1:
+            return None, 0
+        choice_bits = probability.len_log2_floor(choices)
+        nBits = len(payload)
+
+        # if there are no choices, return None:
+        if choice_bits == 0: return None, 0
+
+        bits_to_take = min(choice_bits, nBits)
+        bits = payload[:bits_to_take]
+        return bits.uint, bits_to_take
+    elif mode == 'decipher':
+        # payload is token array
+        choices = len(enum)
+
+        if choices <= 1:
+            return None, 0
+        choice_bits = probability.len_log2_floor(choices)
+
+        # if there are no choices, return None:
+        if choice_bits == 0: return None, 0
+        if len(payload) == 0: return None, 0
+
+        tok = payload[0]
+        if tok in enum:
+            ind = enum.index(tok)
+            bits = ConstBitArray(uint=ind, length=choice_bits)
+            return tok, bits
+        else:
+            return None, 0
+
+
+
+
 ###############################################################################
 # main encipher method
 
@@ -155,7 +195,7 @@ def encipher(model, order, cleartext):
     while (initial_length - bits_processed) > 0:
         model.abs_move_to_child(context) # reset context
         top_tokens = model.top() # get tokens for conversion
-        index, nBits = next_index(cleartext, top_tokens)
+        index, nBits = next_output(cleartext, top_tokens, 'encipher')
         if index is not None and nBits > 0:
             token = top_tokens[index]
             cleartext = cleartext[nBits:]
@@ -188,7 +228,7 @@ def decipher(model, order, ciphertext):
     while (initial_length - tokens_processed) > 0:
         model.abs_move_to_child(context)
         top_tokens = model.top()
-        token, bits = next_token(ciphertext, top_tokens)
+        token, bits = next_output(ciphertext, top_tokens, 'decipher')
         if token is not None and len(bits) > 0:
             ciphertext = ciphertext[1:]
             cleartext.append(bits)
