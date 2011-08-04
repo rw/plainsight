@@ -168,7 +168,6 @@ def next_output(payload, enum, mode):
 
         if len(payload) == 0: return None, 0
 
-#       tok = payload[0]
         if token in enum:
             ind = enum.index(token)
             bits = ConstBitArray(uint=ind, length=choice_bits)
@@ -184,11 +183,11 @@ def next_output(payload, enum, mode):
 
 def encipher(model, order, cleartext):
     ciphertext, context = [], []
-    input_length, bits_processed = len(cleartext), 0
-    initial_length = input_length
+    initial_length = len(cleartext)
+    bits_remaining = initial_length
     pbar = ProgressBar(widgets=['enciphering: ', Percentage(), Bar(), FileTransferSpeed(),
                                 ' | ', ETA()], maxval=initial_length).start()
-    while (initial_length - bits_processed) > 0:
+    while bits_remaining > 0:
         model.abs_move_to_child(context) # reset context
         top_tokens = model.top() # get tokens for conversion
         index, nBits = next_output(cleartext, top_tokens, 'encipher')
@@ -207,8 +206,8 @@ def encipher(model, order, cleartext):
             context = context[1:] # back up the context
         else:
             context = context[1:] # back up the context
-        bits_processed += nBits
-        pbar.update(initial_length - bits_processed)
+        bits_remaining -= nBits
+        pbar.update(initial_length - bits_remaining)
     pbar.finish()
     return ' '.join(ciphertext)
 
@@ -217,11 +216,11 @@ def encipher(model, order, cleartext):
 
 def decipher(model, order, ciphertext):
     cleartext, context = BitArray(), []
-    tokens_processed = 0
     initial_length = len(ciphertext)
+    tokens_remaining = initial_length
     pbar = ProgressBar(widgets=['deciphering: ', Percentage(), Bar(), FileTransferSpeed(),
                                 ' | ', ETA()], maxval=initial_length).start()
-    while (initial_length - tokens_processed) > 0:
+    while tokens_remaining  > 0:
         model.abs_move_to_child(context)
         top_tokens = model.top()
         token, bits = next_output(ciphertext, top_tokens, 'decipher')
@@ -229,13 +228,75 @@ def decipher(model, order, ciphertext):
             ciphertext = ciphertext[1:]
             cleartext.append(bits)
             context.append(token)
-            tokens_processed += 1
+            tokens_remaining -= 1
         elif len(model.get_child_tokens()) == 1:
             token = model.get_child_tokens()[0]
             context.append(token)
             context = context[1:] # remove context to find tokens
         else:
             context = context[1:] # remove context to find tokens
-        pbar.update(tokens_processed)
+        pbar.update(initial_length - tokens_remaining)
     pbar.finish()
     return cleartext
+
+def cipher(model, order, payload, mode):
+    if mode == 'encipher': output = []
+    if mode == 'decipher': output = BitArray()
+    context = []
+    initial_length = len(payload)
+    pbar = ProgressBar(widgets=['%sing: ' % mode,
+                                Percentage(),
+                                Bar(),
+                                FileTransferSpeed(),
+                                ' | ',
+                                ETA()],
+                                maxval=initial_length).start()
+    payload_remaining = initial_length
+    while payload_remaining > 0:
+        model.abs_move_to_child(context) # reset context
+        top_tokens = model.top() # get tokens for conversion
+        if mode == 'encipher':
+            index, nBits = next_output(payload, top_tokens, 'encipher')
+            bits = None
+            if index is not None:
+                token = top_tokens[index]
+                context.append(token)
+        if mode == 'decipher':
+            token, bits = next_output(payload, top_tokens, 'decipher')
+            if token is not None:
+                nBits = len(bits)
+                index = top_tokens.index(token)
+                context.append(token)
+
+        if mode == 'encipher' and index is not None and nBits > 0:
+            token = top_tokens[index]
+            payload = payload[nBits:]
+            output.append(token)
+            payload_remaining -= nBits
+        elif mode == 'encipher' and len(model.get_children()) == 1:
+            # there is no information conveyed when there is no choice to make.
+            # this means that no input bits are consumed. it is purely for
+            # appearances that you can choose to leave these default tokens, or
+            # not. leaving them in seems to make the text more human-like.
+            token = model.get_child_tokens()[0]
+            context.append(token)
+            context = context[1:] # back up the context
+        elif mode == 'encipher':
+            context = context[1:] # back up the context
+        elif mode == 'decipher' and token is not None and len(bits) > 0:
+            payload = payload[1:]
+            output.append(bits)
+            payload_remaining -= 1
+        elif mode == 'decipher' and len(model.get_child_tokens()) == 1:
+            if mode == 'decipher':
+                if mode == 'decipher':
+                    token = model.get_child_tokens()[0]
+                context.append(token)
+                context = context[1:] # remove context to find tokens
+        elif mode == 'decipher':
+            context = context[1:] # remove context to find tokens
+        pbar.update(initial_length - payload_remaining)
+    pbar.finish()
+    if mode == 'encipher': return ' '.join(output)
+    if mode == 'decipher': return output
+

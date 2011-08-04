@@ -69,11 +69,11 @@ if __name__ == '__main__':
 
     if MODE == 'encipher':
         cleartext = data.take_binary_input(INPUT)
-        ciphertext = encipher(model, CONTEXT, cleartext)
+        ciphertext = cipher(model, CONTEXT, cleartext, 'encipher')
         sys.stderr.write('\n')
         sys.stdout.write(ciphertext)
     elif MODE == 'decipher':
         ciphertext = data.to_words(data.take_char_input(INPUT))
-        cleartext = decipher(model, CONTEXT, ciphertext)
+        cleartext = cipher(model, CONTEXT, ciphertext, 'decipher')
         sys.stderr.write('\n')
         sys.stdout.write(cleartext.tobytes())
