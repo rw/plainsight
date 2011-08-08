@@ -1,4 +1,4 @@
-Plainsight, a textual steganography tool to defeat censorship.
+Plainsight: a textual steganography tool to defeat censorship.
 ==============================================================
 
 Contact
@@ -6,6 +6,7 @@ Contact
 * Author: Robert Winslow
 * Source: http://github.com/rw/plainsight
 * Email: robert.winslow@gmail.com
+* Twitter: @robert_winslow
 
 
 Description
