@@ -7,6 +7,7 @@ Contact
 * Source: http://github.com/rw/plainsight
 * Email: robert.winslow@gmail.com
 * Twitter: @robert_winslow
+* Presentation video (8 minutes): http://bit.ly/pecGgW
 
 
 Description
