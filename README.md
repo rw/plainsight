@@ -68,8 +68,8 @@ How to use
 TODO
 ----
 * Fuzz testing.
-* More entropic ciphertexts.
-*   (e.g. play with changing the probability mass as tree depth increases).
+* More entropic ciphertexts.  
+    (e.g. play with changing the probability mass as tree depth increases).
 * Regression tests (e.g. for EOF).
 * Robust adding of files to language model (e.g. independent of args order).
 * Model serialization to pickled Python objects.
@@ -81,8 +81,9 @@ TODO
 
 Bugs
 ----
-The last few bits of a file can be garbled when deciphered.
-  Workaround: check that the deciphered output matches the original cleartext.
+The last few bits of a file can be garbled when deciphered.  
+  Workaround: check that the deciphered output matches the original cleartext.  
+  (Use `xxd -b` to clearly see this difference between input and output)
 
 
 License
