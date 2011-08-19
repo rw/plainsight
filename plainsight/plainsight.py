@@ -43,7 +43,7 @@ parser.add_argument('-u', '--model-url', metavar='URL', type=str, nargs='*',
 args = parser.parse_args()
 MODEL_FILES = args.model_file
 MODE = args.mode[0]
-CONTEXT = args.context
+CONTEXT = max(0, args.context - 1)
 INPUT, OUTPUT, LOGGING = sys.stdin, sys.stdout, sys.stderr
 
 ###############################################################################
