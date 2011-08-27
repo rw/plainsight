@@ -19,5 +19,9 @@ setup(name='Plainsight',
                   ],
       requires=['argparse', 'bitstring', 'progressbar'],
       scripts=['bin/plainsight'],
-      packages=['plainsight']
+      packages=['plainsight'],
+      py_modules=['plainsight.data',
+                  'plainsight.model',
+                  'plainsight.plainsight',
+                  'plainsight.probability']
      )
