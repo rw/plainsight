@@ -104,51 +104,10 @@ class Model:
         phrases = data.to_phrases(context, data.to_words(text))
         for p in phrases:
             self.add_phrase(p)
-#           if len(phrases) - i < context:
-#               print 'HEY: %s' % p
         self.update_root_count()
 
 ###############################################################################
-# utility methods for ciphering
-# TODO: merge next_index and next_token (they share most code)
-
-# for encipher
-def next_index(in_bits, enum):
-    choices = len(enum)
-
-    if choices <= 1:
-        return None, 0
-    choice_bits = probability.len_log2_floor(choices)
-    nBits = len(in_bits)
-
-    # if there are no choices, return None:
-    if choice_bits == 0: return None, 0
-
-
-    bits_to_take = min(choice_bits, nBits)
-    bits = in_bits[:bits_to_take]
-    return bits.uint, bits_to_take
-
-# for decipher
-def next_token(in_ciphertext, enum):
-    choices = len(enum)
-
-    if choices <= 1:
-        return None, 0
-    choice_bits = probability.len_log2_floor(choices)
-
-    # if there are no choices, return None:
-    if choice_bits == 0: return None, 0
-    if len(in_ciphertext) == 0: return None, 0
-
-
-    tok = in_ciphertext[0]
-    if tok in enum:
-        ind = enum.index(tok)
-        bits = ConstBitArray(uint=ind, length=choice_bits)
-        return tok, bits
-    else:
-        return None, 0
+# next_output: get the next bits, or tokens, to output
 
 def next_output(payload, enum, mode, limit):
     choices = len(enum)
@@ -158,25 +117,13 @@ def next_output(payload, enum, mode, limit):
     choice_bits = probability.len_log2_floor(choices)
     # if there are no choices, return None:
     if choice_bits == 0: return None, 0
-    #if finalize: choice_bits = 1
-
-
-    # EOF
-#   if choice_bits > len(payload):
-#       shift = choice_bits - len(payload)
-#   else:
-#       shift = 0
 
     if mode == 'encipher':
         bits_to_take = choice_bits#min(len(payload), choice_bits)
     if mode == 'decipher':
         token = payload[0]
 
-
     if mode == 'encipher':
-
-
-#       bits_to_take = min(8, choice_bits, nBits)
         bits = payload[:bits_to_take]
         return bits.uint, bits_to_take
     elif mode == 'decipher':
@@ -186,91 +133,12 @@ def next_output(payload, enum, mode, limit):
 
         if token in enum:
             ind = enum.index(token)
-#           if ind > 0:
-#               ind << (choice_bits - int(floor(log(ind, 2))))
-#           ind &= (2 ** choice_bits)
-#           while ind > 255:
-#               ind >> 1
-#               choice_bits -= 1
-#           for i in xrange(shift):
-#               ind >> 
-#           ind &= (2 ** choice_bits + 1)
-#           sys.stderr.write('%s vs %s' % (ind, choice_bits))
             bits = ConstBitArray(uint=ind, length=choice_bits)
-#           sys.stderr.write(bits.bin + '\n')
-#           if finalize:
-#               ind &= 1
-#               bits = ConstBitArray(bool=ind)
-#           else:
             return token, bits
         else:
             return None, 0
-
-
-
-
 ###############################################################################
-# main encipher method
-#
-# def encipher(model, order, cleartext):
-#     ciphertext, context = [], []
-#     initial_length = len(cleartext)
-#     bits_remaining = initial_length
-#     pbar = ProgressBar(widgets=['enciphering: ', Percentage(), Bar(), FileTransferSpeed(),
-#                                 ' | ', ETA()], maxval=initial_length).start()
-#     while bits_remaining > 0:
-#         model.abs_move_to_child(context) # reset context
-#         top_tokens = model.top() # get tokens for conversion
-#         index, nBits = next_output(cleartext, top_tokens, 'encipher',
-#                                    finalize=bits_remaining < 8)
-#         if index is not None and nBits > 0:
-#             token = top_tokens[index]
-#             cleartext = cleartext[nBits:]
-#             ciphertext.append(token)
-#             context.append(token)
-#         elif len(model.get_children()) == 1:
-#             # there is no information conveyed when there is no choice to make.
-#             # this means that no input bits are consumed. it is purely for
-#             # appearances that you can choose to leave these default tokens, or
-#             # not. leaving them in seems to make the text more human-like.
-#             token = model.get_child_tokens()[0]
-#             context.append(token)
-#             context = context[1:] # back up the context
-#         else:
-#             context = context[1:] # back up the context
-#         bits_remaining -= nBits
-#         pbar.update(initial_length - bits_remaining)
-#     pbar.finish()
-#     return ' '.join(ciphertext)
-# 
-###############################################################################
-# main decipher method
-#
-# def decipher(model, order, ciphertext):
-#     cleartext, context = BitArray(), []
-#     initial_length = len(ciphertext)
-#     tokens_remaining = initial_length
-#     pbar = ProgressBar(widgets=['deciphering: ', Percentage(), Bar(), FileTransferSpeed(),
-#                                 ' | ', ETA()], maxval=initial_length).start()
-#     while tokens_remaining  > 0:
-#         model.abs_move_to_child(context)
-#         top_tokens = model.top()
-#         token, bits = next_output(ciphertext, top_tokens, 'decipher',
-#                                   finalize=tokens_remaining < 8)
-#         if token is not None and len(bits) > 0:
-#             ciphertext = ciphertext[1:]
-#             cleartext.append(bits)
-#             context.append(token)
-#             tokens_remaining -= 1
-#         elif len(model.get_child_tokens()) == 1:
-#             token = model.get_child_tokens()[0]
-#             context.append(token)
-#             context = context[1:] # remove context to find tokens
-#         else:
-#             context = context[1:] # remove context to find tokens
-#         pbar.update(initial_length - tokens_remaining)
-#     pbar.finish()
-#     return cleartext
+# cipher: encipher or decipher input, given a linguistic model
 
 def cipher(model, order, payload, mode, limit_max=None):
     if mode == 'encipher': output = []
