@@ -1,3 +1,3 @@
 include bin/plainsight
-recursive-include plainsight
+recursive-include plainsight *.py
 include README
