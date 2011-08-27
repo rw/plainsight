@@ -272,7 +272,7 @@ def next_output(payload, enum, mode, limit):
 #     pbar.finish()
 #     return cleartext
 
-def cipher(model, order, payload, mode):
+def cipher(model, order, payload, mode, limit_max=None):
     if mode == 'encipher': output = []
     if mode == 'decipher': output = BitArray()
     context = []
@@ -294,7 +294,10 @@ def cipher(model, order, payload, mode):
         elif mode == 'decipher' and payload_remaining == 1:
             limit = 2**(8 - bit_marker)
         else:
-            limit = 256
+            if limit_max is None:
+                limit = 2**32
+            else:
+                limit = limit_max
         top_tokens = model.top(limit) # get tokens for conversion
         if mode == 'encipher':
             index, nBits = next_output(payload, top_tokens, 'encipher',
