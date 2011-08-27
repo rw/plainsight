@@ -35,10 +35,6 @@ parser.add_argument('-u', '--model-url', metavar='URL', type=str, nargs='*',
                    help='(Not implemented.) One or more URLs to use when creating the lingustic model. ' + \
                         'The data at the URL will be stripped of markup. ' + \
                         'Example input: http://www.gutenberg.org/ebooks/1661.txt.utf8 (Sherlock Holmes).')
-#parser.add_argument('-i', '--input', metavar='FILE', type=argparse.FileType('rb'), default=sys.stdin,
-#                   help='Input file. Defaults to stdin.')
-#parser.add_argument('-o', '--output', metavar='FILE', type=argparse.FileType('wb'), default=sys.stdout,
-#                   help='Output file. Defaults to stdout.')
 
 args = parser.parse_args()
 MODEL_FILES = args.model_file
