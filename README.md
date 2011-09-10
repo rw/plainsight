@@ -68,7 +68,6 @@ How to use
 
 TODO
 ----
-* Fuzz testing.
 * More entropic ciphertexts.  
     (e.g. play with changing the probability mass as tree depth increases).
 * Regression tests (e.g. for EOF).
