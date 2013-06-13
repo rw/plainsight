@@ -81,9 +81,8 @@ TODO
 
 Bugs
 ----
-The last few bits of a file can be garbled when deciphered.  
-  Workaround: check that the deciphered output matches the original cleartext.  
-  (Use `xxd -b` to clearly see this difference between input and output)
+
+The implementation is not as clear as it should be.
 
 
 License
