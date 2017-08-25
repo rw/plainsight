@@ -24,8 +24,9 @@ suspicious random-looking bitstreams are seen by others.
 How to use
 ----------
 
-1. Install it:
+1. Install it (only Python 2 is supported at this time, due to the path in the executable shim):
 
+        sudo pip install bitstring
         sudo pip install plainsight
 
 2. Download a copy of 'The Adventures of Sherlock Holmes'
